@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="20dp"
+        tools:context=".view.ui.players.PlayersFragment">
+
+        <TextView
+            android:id="@+id/text_my_player"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Me" />
+
+        <ImageView
+            android:id="@+id/image_my_token"
+            android:layout_width="30dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:contentDescription="@string/x_player"
+            android:padding="2dp"
+            app:layout_constraintBottom_toBottomOf="@+id/text_my_player"
+            app:layout_constraintStart_toEndOf="@+id/text_my_player"
+            app:layout_constraintTop_toTopOf="@+id/text_my_player"
+            tools:srcCompat="@drawable/ic_token_x" />
+
+
+        <TextView
+            android:id="@+id/text_vs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/vs"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="@+id/text_my_player"
+            app:layout_constraintEnd_toStartOf="@+id/text_other_player"
+            app:layout_constraintStart_toEndOf="@+id/text_my_player"
+            app:layout_constraintTop_toTopOf="@+id/text_my_player" />
+
+        <ImageView
+            android:id="@+id/image_other_token"
+            android:layout_width="30dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="@string/o_player"
+            android:padding="2dp"
+            app:layout_constraintBottom_toBottomOf="@+id/text_other_player"
+            app:layout_constraintEnd_toStartOf="@+id/text_other_player"
+            app:layout_constraintTop_toTopOf="@+id/text_other_player"
+            tools:srcCompat="@drawable/ic_token_o" />
+
+        <TextView
+            android:id="@+id/text_other_player"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/text_vs"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/text_vs"
+            tools:text="Other" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier_players"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="text_my_player,text_other_player, text_vs" />
+
+        <TextView
+            android:id="@+id/text_game_status"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/barrier_players"
+            tools:text="Fight! Fight! Fight! Fight! Fight! Fight! Fight!" />
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="H,1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_game_status"
+            app:layout_constraintVertical_bias="0.19999999">
+
+            <include
+                android:id="@+id/board"
+                layout="@layout/board" />
+        </FrameLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/end_game_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/semi_transparent"
+        android:padding="20dp"
+        android:visibility="invisible"
+        tools:visibility="visible">
+
+        <TextView
+            android:id="@+id/text_end_game_message"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="16dp"
+            android:gravity="center"
+            android:shadowColor="@color/winner_text_shadow"
+            android:shadowDx="-8"
+            android:shadowDy="-8"
+            android:shadowRadius="20"
+            android:textAlignment="center"
+            android:textColor="@color/winner_text_color"
+            android:textSize="60sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/button_play_again"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Batman is the Winner!" />
+
+        <ImageButton
+            android:id="@+id/button_play_again"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginBottom="64dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/play_again"
+            android:paddingTop="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_baseline_refresh_24"
+            android:text="@string/play_again"
+            android:tooltipText="@string/play_again"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/text_end_game_message"
+            app:layout_constraintStart_toStartOf="@+id/text_end_game_message"
+            app:layout_constraintTop_toBottomOf="@+id/text_end_game_message" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

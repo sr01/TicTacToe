@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">TicTacToe</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- Strings used for fragments for navigation -->
+    <string name="join_game_fragment_label">Join In</string>
+    <string name="players_fragment_label">Players</string>
+    <string name="board_fragment_label">Play</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="enter_your_name">Enter your name</string>
+    <string name="play_again">Play Again</string>
+    <string name="x_player">x player</string>
+    <string name="o_player">o player</string>
+    <string name="vs">VS</string>
+    <string name="looking_for_nearby_players">Looking for nearby players...</string>
+    <string name="user_image">user image</string>
+    <string name="game_end_message_my_player_is_winner">WINNER!</string>
+    <string name="game_end_message_other_player_is_winner">%s is the WINNER!</string>
+    <string name="game_end_message_draw">DRAW</string>
+    <string name="player_has_left_the_game">%s has left the game</string>
+    <string name="exit_game_action">Exit</string>
+    <string name="player_request_to_play_again">%s requests to play again, do you accept?</string>
+    <string name="accept_play_again_request_action">accept</string>
+    <string name="decline_play_again_request_action">decline</string>
+    <string name="player_make_your_move">%s, make your move...</string>
+    <string name="exit_game_message">Exit game?</string>
+    <string name="exit_game_positive_action">Exit</string>
+    <string name="exit_game_negative_action">Cancel</string>
+
+</resources>

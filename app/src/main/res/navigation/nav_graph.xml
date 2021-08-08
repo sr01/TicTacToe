@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/navigation_join_game_fragment">
+
+    <fragment
+        android:id="@+id/navigation_join_game_fragment"
+        android:name="com.rosi.tictactoe.view.ui.join.JoinGameFragment"
+        android:label="@string/join_game_fragment_label"
+        tools:layout="@layout/fragment_join_game">
+        <action
+            android:id="@+id/action_JoinGameFragment_to_PlayersFragment"
+            app:destination="@id/navigation_players_fragment"
+            app:launchSingleTop="true" />
+        <action
+            android:id="@+id/action_navigation_join_game_fragment_to_navigation_board_fragment"
+            app:destination="@id/navigation_board_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_players_fragment"
+        android:name="com.rosi.tictactoe.view.ui.players.PlayersFragment"
+        android:label="@string/players_fragment_label"
+        tools:layout="@layout/fragment_players" >
+        <action
+            android:id="@+id/action_navigation_players_fragment_to_boardFragment"
+            app:destination="@id/navigation_board_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_board_fragment"
+        android:name="com.rosi.tictactoe.view.ui.board.BoardFragment"
+        android:label="@string/board_fragment_label" />
+
+</navigation>

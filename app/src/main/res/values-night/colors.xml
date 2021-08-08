@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="game_board_cell_border">@color/white</color>
+    <color name="semi_transparent">#80000000</color>
+    <color name="winner_text_color">@color/white</color>
+    <color name="winner_text_shadow">@color/md_yellow_A100</color>
+</resources>
