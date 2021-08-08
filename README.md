@@ -1,7 +1,7 @@
 # TicTacToe - Android demo application
-A local multiplayer game for two players use their mobile devices.
+A small local multiplayer game for two players use their mobile devices.
 
 Key Features:
-- Sample implementation of p2p.kotlin - A Peer-to-peer communication library
-- Demonstration of actor model design, using  Kotlin Actors
+- An example of using a [p2p.kotlin](https://github.com/sr01/p2p.kotlin) - A Peer-to-peer communication library
+- Showcases an actor model based design, using  Kotlin Actors
 
