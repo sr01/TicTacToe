@@ -1,4 +1,4 @@
-# TicTacToe - Android demo application
+# TicTacToe - Android demo application written in Kotlin
 A small local multiplayer game for two players use their mobile devices.
 
 Key Features:
