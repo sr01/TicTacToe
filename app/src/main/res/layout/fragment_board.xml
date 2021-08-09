@@ -12,67 +12,83 @@
         android:padding="20dp"
         tools:context=".view.ui.players.PlayersFragment">
 
-        <TextView
-            android:id="@+id/text_my_player"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Me" />
 
-        <ImageView
-            android:id="@+id/image_my_token"
-            android:layout_width="30dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="16dp"
-            android:contentDescription="@string/x_player"
-            android:padding="2dp"
-            app:layout_constraintBottom_toBottomOf="@+id/text_my_player"
-            app:layout_constraintStart_toEndOf="@+id/text_my_player"
-            app:layout_constraintTop_toTopOf="@+id/text_my_player"
-            tools:srcCompat="@drawable/ic_token_x" />
-
-
-        <TextView
-            android:id="@+id/text_vs"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/vs"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="@+id/text_my_player"
-            app:layout_constraintEnd_toStartOf="@+id/text_other_player"
-            app:layout_constraintStart_toEndOf="@+id/text_my_player"
-            app:layout_constraintTop_toTopOf="@+id/text_my_player" />
-
-        <ImageView
-            android:id="@+id/image_other_token"
-            android:layout_width="30dp"
-            android:layout_height="0dp"
-            android:layout_marginEnd="16dp"
-            android:contentDescription="@string/o_player"
-            android:padding="2dp"
-            app:layout_constraintBottom_toBottomOf="@+id/text_other_player"
-            app:layout_constraintEnd_toStartOf="@+id/text_other_player"
-            app:layout_constraintTop_toTopOf="@+id/text_other_player"
-            tools:srcCompat="@drawable/ic_token_o" />
-
-        <TextView
-            android:id="@+id/text_other_player"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="@+id/text_vs"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/text_vs"
-            tools:text="Other" />
-
-        <androidx.constraintlayout.widget.Barrier
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/barrier_players"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:barrierDirection="bottom"
-            app:constraint_referenced_ids="text_my_player,text_other_player, text_vs" />
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/text_my_player"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toStartOf="@+id/image_my_token"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Player-1" />
+
+            <ImageView
+                android:id="@+id/image_my_token"
+                android:layout_width="30dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:contentDescription="@string/x_player"
+                android:padding="2dp"
+                android:scaleType="fitStart"
+                app:layout_constraintBottom_toBottomOf="@+id/text_my_player"
+                app:layout_constraintEnd_toStartOf="@+id/text_vs"
+                app:layout_constraintStart_toEndOf="@+id/text_my_player"
+                app:layout_constraintTop_toTopOf="@+id/text_my_player"
+                tools:srcCompat="@drawable/ic_token_x" />
+
+
+            <TextView
+                android:id="@+id/text_vs"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:gravity="center|top"
+
+                android:text="@string/vs"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="@+id/image_my_token"
+                app:layout_constraintEnd_toStartOf="@+id/image_other_token"
+                app:layout_constraintStart_toEndOf="@+id/image_my_token"
+                app:layout_constraintTop_toTopOf="@+id/image_other_token" />
+
+            <ImageView
+                android:id="@+id/image_other_token"
+                android:layout_width="30dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="8dp"
+                android:contentDescription="@string/o_player"
+                android:padding="2dp"
+                android:scaleType="fitStart"
+                app:layout_constraintBottom_toBottomOf="@+id/text_other_player"
+                app:layout_constraintEnd_toStartOf="@+id/text_other_player"
+                app:layout_constraintStart_toEndOf="@+id/text_vs"
+                app:layout_constraintTop_toTopOf="@+id/text_other_player"
+                tools:srcCompat="@drawable/ic_token_o" />
+
+            <TextView
+                android:id="@+id/text_other_player"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:maxLines="2"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toEndOf="@+id/image_other_token"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Player-1" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         <TextView
             android:id="@+id/text_game_status"
@@ -101,6 +117,7 @@
                 android:id="@+id/board"
                 layout="@layout/board" />
         </FrameLayout>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -7,14 +7,13 @@ import androidx.lifecycle.viewModelScope
 import com.rosi.tictactoe.base.logging.Logger
 import com.rosi.tictactoe.view.GameUIEvent
 import com.rosi.tictactoe.view.MainActivityActor
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class JoinGameViewModel(private val actor: MainActivityActor, private val logger: Logger) : ViewModel() {
 
     private val tag = "JoinGameViewModel"
-    private val internalNotifications = Channel<GameUIEvent>()
+    private val internalNotifications = MutableSharedFlow<GameUIEvent>()
     val playerName: LiveData<String>
     val notifications: Flow<GameUIEvent>
 
@@ -28,16 +27,16 @@ class JoinGameViewModel(private val actor: MainActivityActor, private val logger
 
         val externalNotifications2: Flow<GameUIEvent> = actor.getEventFlow()
 
-        notifications = flowOf(externalNotifications2, internalNotifications.receiveAsFlow()).flattenMerge()
+        notifications = flowOf(externalNotifications2, internalNotifications).flattenMerge()
     }
 
     fun joinInTheGame(playerName: String) {
         viewModelScope.launch {
             if (isValidPlayerName(playerName)) {
                 actor.setPlayerName(playerName)
-                internalNotifications.send(GameUIEvent.NavigateToPlayersUIEvent)
+                internalNotifications.emit(GameUIEvent.NavigateToPlayersUIEvent)
             } else {
-                internalNotifications.send(GameUIEvent.InvalidPlayerNameUIEvent)
+                internalNotifications.emit(GameUIEvent.InvalidPlayerNameUIEvent)
             }
         }
     }

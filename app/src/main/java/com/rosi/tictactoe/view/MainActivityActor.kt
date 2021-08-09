@@ -1,52 +1,54 @@
 package com.rosi.tictactoe.view
 
 import com.rosi.tictactoe.*
-import com.rosi.tictactoe.base.logging.Logger
 import com.rosi.tictactoe.base.actor.Actor
 import com.rosi.tictactoe.base.actor.Message
 import com.rosi.tictactoe.base.actor.send
+import com.rosi.tictactoe.base.logging.Logger
 import com.rosi.tictactoe.controller.Controller
 import com.rosi.tictactoe.model.connect.User
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.onSubscription
 
 class MainActivityActor(private val controller: Controller, private val viewManager: ViewManager, name: String, logger: Logger, scope: CoroutineScope) :
     Actor(name, logger, scope) {
 
-    private val channel = BroadcastChannel<GameUIEvent>(1)
+    private val sharedFlow = MutableSharedFlow<GameUIEvent>(replay = 0)
+    val eventsFlow: SharedFlow<GameUIEvent> = sharedFlow
 
     override suspend fun receive(message: Message) {
         super.receive(message)
 
         when (message) {
-            is SetPlayerNameMessage -> channel.send(GameUIEvent.PlayerNameUIEvent(message.playerName))
-            is GetPlayerNameMessage -> if (message.playerName != null) channel.send(GameUIEvent.PlayerNameUIEvent(message.playerName))
-            is UserAvailableMessage -> if (message.user != null) channel.send(GameUIEvent.UserAvailableUIEvent(message.user))
-            is UserUnavailableMessage -> if (message.user != null) channel.send(GameUIEvent.UserUnavailableUIEvent(message.user))
-            is ConnectingMessage -> channel.send(GameUIEvent.ConnectingUIEvent(message.user))
-            is ConnectedMessage -> if (message.user != null) channel.send(GameUIEvent.ConnectedUIEvent(message.user))
-            is FailedToConnectMessage -> if (message.user != null) channel.send(GameUIEvent.FailedToConnectUIEvent(message.user))
-            is ConnectionAccepted -> if (message.user != null) channel.send(GameUIEvent.ConnectionAcceptedUIEvent(message.user))
-            is ConnectionRejected -> if (message.user != null) channel.send(GameUIEvent.ConnectionRejectedUIEvent(message.user))
-            is DisconnectedMessage -> if (message.user != null) channel.send(GameUIEvent.DisconnectedUIEvent(message.user))
-            is AcceptCallMessage -> channel.send(GameUIEvent.ConnectionAcceptedUIEvent(message.user))
-            is IncomingCallMessage -> channel.send(GameUIEvent.IncomingCallUIEvent(message.user))
-            is GameStateUpdateMessage -> channel.send(GameUIEvent.GameStatusUIEvent(message.gameState))
-            is GetGameStateMessage -> if (message.gameState != null) channel.send(GameUIEvent.GameStatusUIEvent(message.gameState))
-            is StartDiscoverMessage -> if (message.connectedUser != null) channel.send(GameUIEvent.UserAvailableUIEvent(message.connectedUser))
-            is PlayAgainRequestRemoteMessage -> if (message.requestBy != null) channel.send(GameUIEvent.PlayAgainRequestUIEvent(message.requestBy))
-            is PlayAgainResponseRemoteMessage -> if (message.answeredBy != null) channel.send(GameUIEvent.PlayAgainResponseUIEvent(message.answeredBy, message.isAccepted))
+            is SetPlayerNameMessage -> sharedFlow.emit(GameUIEvent.PlayerNameUIEvent(message.playerName))
+            is GetPlayerNameMessage -> if (message.playerName != null) sharedFlow.emit(GameUIEvent.PlayerNameUIEvent(message.playerName))
+            is UserAvailableMessage -> if (message.user != null) sharedFlow.emit(GameUIEvent.UserAvailableUIEvent(message.user))
+            is UserUnavailableMessage -> if (message.user != null) sharedFlow.emit(GameUIEvent.UserUnavailableUIEvent(message.user))
+            is ConnectingMessage -> sharedFlow.emit(GameUIEvent.ConnectingUIEvent(message.user))
+            is ConnectedMessage -> if (message.user != null) sharedFlow.emit(GameUIEvent.ConnectedUIEvent(message.user))
+            is FailedToConnectMessage -> if (message.user != null) sharedFlow.emit(GameUIEvent.FailedToConnectUIEvent(message.user))
+            is ConnectionAccepted -> if (message.user != null) sharedFlow.emit(GameUIEvent.ConnectionAcceptedUIEvent(message.user))
+            is ConnectionRejected -> if (message.user != null) sharedFlow.emit(GameUIEvent.ConnectionRejectedUIEvent(message.user))
+            is DisconnectedMessage -> if (message.user != null) sharedFlow.emit(GameUIEvent.DisconnectedUIEvent(message.user))
+            is AcceptCallMessage -> sharedFlow.emit(GameUIEvent.ConnectionAcceptedUIEvent(message.user))
+            is IncomingCallMessage -> sharedFlow.emit(GameUIEvent.IncomingCallUIEvent(message.user))
+            is GameStateUpdateMessage -> sharedFlow.emit(GameUIEvent.GameStatusUIEvent(message.gameState))
+            is GetGameStateMessage -> if (message.gameState != null) sharedFlow.emit(GameUIEvent.GameStatusUIEvent(message.gameState))
+            is StartDiscoverMessage -> if (message.connectedUser != null) sharedFlow.emit(GameUIEvent.UserAvailableUIEvent(message.connectedUser))
+            is PlayAgainRequestRemoteMessage -> if (message.requestBy != null) sharedFlow.emit(GameUIEvent.PlayAgainRequestUIEvent(message.requestBy))
+            is PlayAgainResponseRemoteMessage -> if (message.answeredBy != null) sharedFlow.emit(GameUIEvent.PlayAgainResponseUIEvent(message.answeredBy, message.isAccepted))
         }
     }
 
     fun getEventFlow(): Flow<GameUIEvent> {
-        return channel.asFlow().onStart {
-            this@MainActivityActor send GetPlayerNameMessage() to controller
-            this@MainActivityActor send GetGameStateMessage() to controller
-        }
+        return eventsFlow
+            .onSubscription {
+                this@MainActivityActor send GetPlayerNameMessage() to controller
+                this@MainActivityActor send GetGameStateMessage() to controller
+            }
     }
 
     fun appStart() = this send AppStartMessage() to viewManager
